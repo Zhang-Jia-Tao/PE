@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdkj.boot.mapper.UserMapper">
+    <select id="QueryUser" resultType="User">
+        select * from User
+    </select>
+
+    <select id="UserLogin" resultType="User">
+        select * from User where UserName=#{username} and Password=#{password}
+    </select>
+
+    <!--修改个人信息-->
+    <update id="UpdateById">
+        update User set UserName = #{username},Password = #{password},Sex = #{sex},Age = #{age},Pe_Dir = #{pe_dir},
+                        Phone = #{phone} where UserId = #{userid}
+    </update>
+
+    <!--用户注册-->
+    <insert id="UserRegister">
+        insert into User(UserName,Password,Sex,Age,PE_Dir,Phone) values (#{username},#{password},#{sex},#{age},#{dir},#{phone})
+    </insert>
+
+    <update id="UpdateIP">
+        update User set IP = #{IP} where username = #{username}
+    </update>
+
+    <!--添加好友 查询的信息是将要添加的好友信息-->
+    <select id="SelectFriend" resultType="User">
+        select * from User where UserName = #{id} or Phone = #{id} limit 1
+    </select>
+
+    <!--查看是否被封禁-->
+    <select id="QueryStatus" resultType="int">
+        select 1 from User where userid = #{id} and status = 0;
+    </select>
+
+</mapper>
